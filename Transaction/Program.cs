@@ -11,18 +11,30 @@ namespace Transaction
     {
         static void Main()
         {
+
+            //Tracnsaction ID in this case
+            //f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
+            //The TransactionId is defined by SHA256(SHA256(txbytes))
+            //Do NOT use the TransactionId to handle unconfirmed transactions. The TransactionId can be 
+            //manipulated before it is confirmed. This is known as “Transaction Malleability.
+
+
+
+            //** I want to something that fetch me the transactions
+
+
             // Create a client
             QBitNinjaClient client = new QBitNinjaClient(Network.Main);
             // Parse transaction id to NBitcoin.uint256 so the client can eat it
             var transactionId = uint256.Parse("f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94");
-            // Query the transaction
+            // Query the transaction by ID
             QBitNinja.Client.Models.GetTransactionResponse transactionResponse = client.GetTransaction(transactionId).Result;
 
 
             NBitcoin.Transaction transaction = transactionResponse.Transaction;
 
             Console.WriteLine(transactionResponse.TransactionId); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
-            Console.WriteLine(transaction.GetHash()); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
+            Console.WriteLine(transaction.GetHash());             // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
 
             // RECEIVED COINS
             List<ICoin> receivedCoins = transactionResponse.ReceivedCoins;
